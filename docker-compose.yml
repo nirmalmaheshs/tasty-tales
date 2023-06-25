@@ -13,7 +13,6 @@ services:
     stdin_open: true
     tty: true    
     # restart: unless-stopped
-    env_file: ./.env
     ports:
       - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
     depends_on:
@@ -23,7 +22,6 @@ services:
   mongodb:
     image: mongo
     container_name: mongodb
-    env_file: ./.env
     ports:
       - $MONGODB_LOCAL_PORT:$MONGODB_DOCKER_PORT
     environment:

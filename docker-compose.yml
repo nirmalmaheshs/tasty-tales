@@ -1,11 +1,9 @@
 # mongo-express.yml
-version: "3"
+version: "3.8"
 
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: ./BackendApp
     environment:
       - DB_HOST=mongodb
       - DB_USER=$MONGODB_USER
@@ -29,20 +27,21 @@ services:
     ports:
       - $MONGODB_LOCAL_PORT:$MONGODB_DOCKER_PORT
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=rootuser
-      - MONGO_INITDB_ROOT_PASSWORD=rootpass
+      - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_PASSWORD
     volumes:
       - db:/data/db  
 
-  # mongo-express:
-  #   image: mongo-express
-  #   container_name: mongo-express
-  #   ports:
-  #     - 8081:8081
-  #   environment:
-  #     - ME_CONFIG_MONGODB_ADMINUSERNAME=rootuser
-  #     - ME_CONFIG_MONGODB_ADMINPASSWORD=rootpass
-  #     - ME_CONFIG_MONGODB_SERVER=mongodb
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    env_file: ./.env
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=$MONGODB_USER
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=$MONGODB_PASSWORD
+      - ME_CONFIG_MONGODB_SERVER=mongodb
 
 networks:
   default:

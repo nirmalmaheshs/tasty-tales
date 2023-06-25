@@ -9,7 +9,6 @@ const PORT = 8080; // Choose a port number
 app.use(express.json());
 app.use(cors());
 
-const mongodbURI = process.env.MONGODB_CONNECTION_URI
 const {
   DB_USER,
   DB_PASSWORD,

@@ -4,14 +4,21 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const app = express();
-const PORT = 3000; // Choose a port number
+const PORT = 8080; // Choose a port number
 
 app.use(express.json());
 app.use(cors());
 
 const mongodbURI = process.env.MONGODB_CONNECTION_URI
+const {
+  DB_USER,
+  DB_PASSWORD,
+  DB_HOST,
+  DB_PORT,
+  DB_NAME,
+} = process.env;
 
-mongoose.connect(mongodbURI , {
+mongoose.connect(`mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=admin` , {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })

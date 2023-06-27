@@ -35,5 +35,5 @@ app.get('/', (req, res) => {
 app.use('/api/recipes', require('./app/routes/recipes'));
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port - ${PORT}`);
 });

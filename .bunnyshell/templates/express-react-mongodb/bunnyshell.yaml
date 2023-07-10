@@ -1,0 +1,72 @@
+kind: Environment
+name: production
+type: primary
+urlHandle: tastytales
+environmentVariables:
+    MONGODB_PASSWORD: '<<BNS_SECRET>>'
+    MONGODB_USERNAME: '<<BNS_SECRET>>'
+components:
+    -
+        kind: Database
+        name: mongodb
+        dockerCompose:
+            environment:
+                MONGO_INITDB_ROOT_PASSWORD: rootpass
+                MONGO_INITDB_ROOT_USERNAME: rootuser
+            image: mongo
+            ports:
+                - '27017:27017'
+        volumes:
+            -
+                name: db
+                mount: /data/db
+                subPath: ''
+    -
+        kind: Application
+        name: node-backend
+        gitRepo: 'https://github.com/nirmalmaheshs/tasty-tales.git'
+        gitBranch: main
+        gitApplicationPath: tasty-table-backend
+        dockerCompose:
+            build:
+                context: ./tasty-table-backend
+                dockerfile: Dockerfile
+            environment:
+                DB_HOST: mongodb
+                DB_NAME: recipe-sharing-platform
+                DB_PASSWORD: rootpass
+                DB_PORT: '27017'
+                DB_USER: rootuser
+            ports:
+                - '8080:8080'
+            stdin_open: true
+            tty: true
+        hosts:
+            -
+                hostname: 'node-backend-{{ env.base_domain }}'
+                path: /
+                servicePort: 8080
+    -
+        kind: Application
+        name: react-ui
+        gitRepo: 'https://github.com/nirmalmaheshs/tasty-tales.git'
+        gitBranch: main
+        gitApplicationPath: tasty-table-ui
+        dockerCompose:
+            build:
+                context: ./tasty-table-ui
+                dockerfile: Dockerfile
+            ports:
+                - '80:80'
+            stdin_open: true
+            tty: true
+        hosts:
+            -
+                hostname: 'react-ui-{{ env.base_domain }}'
+                path: /
+                servicePort: 80
+volumes:
+    -
+        name: db
+        size: 1Gi
+        type: disk

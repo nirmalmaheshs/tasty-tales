@@ -14,5 +14,4 @@ stack:
       version: '4.4'
     - name: MongoDB
       version: '7.0'
-    - name: 'Creative Tim'
 discoverable: true

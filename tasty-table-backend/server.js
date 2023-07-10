@@ -58,6 +58,17 @@ const image = urls.sort(() => 0.5 - Math.random())[0];
     });
 });
 
+app.post('/api/recipes/fill', async(req, res) => {
+  const recipes = req.body;
+  let promises = [];
+  recipes.forEach((recipe) => {
+    const newRecipe = new Recipe(recipe);
+    promises.push(newRecipe.save());
+  });
+  await Promise.all(promises);
+  res.send(201).json({})
+})
+
 app.use('/api/recipes', require('./app/routes/recipes'));
 
 app.listen(PORT, () => {

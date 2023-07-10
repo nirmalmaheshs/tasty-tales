@@ -1,7 +1,7 @@
 name: Express + React + MongoDB
 description: This is a boilerplate for creating a new environment using Node, Express, React and MongoDB. It contains a basic CRUD example to demonstrate how components connect and make it easy to start with.
-tags: [ nodejs, express, react, typescript, mongodb ]
-icons: [ nodejs, express, react, typescript, mongodb ]
+tags: [ nodejs, express, react, typescript, mongodb, creative tim ]
+icons: [ nodejs, express, react, typescript, mongodb, creative tim ]
 stack:
   packages:
     - name: Node.js
@@ -14,4 +14,5 @@ stack:
       version: '4.4'
     - name: MongoDB
       version: '7.0'
+    - name: 'Creative Tim'
 discoverable: true
